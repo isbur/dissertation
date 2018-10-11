@@ -2,6 +2,7 @@ from setRespondentType import RespondentType
 import weightedChoice as wc
 
 from numpy import *
+from openpyxl import Workbook
 from operator import add
 from os import listdir
 from os.path import isfile, join
@@ -21,11 +22,17 @@ RespondentTypesWeights = {
     "Орки": 0
 }
 
-responsesTable = []
+ResponsesTable = []
 for i in range(N):
     A = array(list(RespondentTypesWeights.items()))
     weights = list(map(float, A[0:len(A),1:]))
     respondentTypeName = A[wc.weightedChoice(weights), 0]
-    responsesTable.append( wc.generateAnswer(RespondentTypes[respondentTypeName]) )
-    
+    ResponsesTable.append( wc.generateAnswer(RespondentTypes[respondentTypeName]) )
+
+wb = Workbook()
+ws = wb.active
+for Response in ResponsesTable:
+    ws.append(Response)
+wb.save('responses.xlsx')
+
     
