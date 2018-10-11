@@ -34,7 +34,7 @@ class RespondentType:
                     #print("Hello!")
                     i, j = cell.row, cell.col_idx
                     fn = Expression(str(ws.cell(row = i, column = j + 1).value), "x")
-                    #print(fn)
+                    print(fn)
                     Distribution = Distribution + [fn(x) for x in range(ws.cell(row = i, column = j + 2).value, ws.cell(row = i, column = j + 3).value)]
                     break
                     
