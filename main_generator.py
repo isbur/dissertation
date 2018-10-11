@@ -8,7 +8,7 @@ from os import listdir
 from os.path import isfile, join
 
 
-N = 100
+N = 1534
 
 RespondentTypes = {}
 onlyfiles = [f for f in listdir("./") if isfile(join("./", f))]
@@ -16,11 +16,14 @@ for file in onlyfiles:
     if file.find(".xlsx") != -1:
         RespondentTypes[file[0:len(file)-5]] = RespondentType.setViaFile(file)
 
+#RespondentTypesWeights = {
+    #"Узбеки без семьи": 700, # https://ru.wikipedia.org/wiki/%D0%9D%D0%B0%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B
+    #"Армяне": 500,
+    #"Казахи-студенты": 300
+#}
 RespondentTypesWeights = {
-    "Узбеки без семьи": 35595, # https://ru.wikipedia.org/wiki/%D0%9D%D0%B0%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B
-    "Армяне": 106466,
-    "Казахи-студенты": 9393
-}
+    "Узбеки без семьи"
+    }
 
 ResponsesTable = []
 for i in range(N):
