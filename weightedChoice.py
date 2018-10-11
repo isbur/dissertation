@@ -6,6 +6,7 @@ def weightedChoice(weights):
     running_total = 0
 
     for w in weights:
+        #print(w)
         running_total += w
         totals.append(running_total)
 
