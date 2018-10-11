@@ -8,7 +8,7 @@ from os import listdir
 from os.path import isfile, join
 
 
-N = 10
+N = 100
 
 RespondentTypes = {}
 onlyfiles = [f for f in listdir("./") if isfile(join("./", f))]

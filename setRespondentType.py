@@ -27,6 +27,9 @@ class RespondentType:
                 if re.search('[а-яА-ЯёЁ]', str(cell.value)):
                     continue
                 
+                #if cell.value == "?":       
+                    #print("Hey!!!!", my_filename)
+                
                 if cell.value == "f:":
                     #print("Hello!")
                     i, j = cell.row, cell.col_idx

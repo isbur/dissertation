@@ -35,6 +35,7 @@ def weightedChoice(weights):
 def generateAnswer(myRespondentTypeObject):
     Answer = []
     for Distribution in myRespondentTypeObject.Distributions:
+        #print(Distribution)
         Answer.append(weightedChoice(Distribution))
     
     return Answer
