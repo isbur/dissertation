@@ -48,3 +48,12 @@ class RespondentType:
             list2 = other.Distributions[i]
             Sum.append( list( map(add, list1, list2) ) )
         return RespondentType(Sum)
+    
+    def __mul__(self, number):
+        Product = []
+        for i in range( len(self.Distributions) ):
+            row = []
+            for item in self.Distributions[i]:
+                row.append(number*item)
+            Product.append(row)
+        return RespondentType(Product)
