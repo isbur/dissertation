@@ -1,0 +1,8 @@
+2018-08-09 18:25:49,049 INFO  (main) [org.databene.CONFIG] Running file -version
+2018-08-09 18:25:49,049 INFO  (main) [org.databene.CONFIG] Benerator 0.9.8 build 9
+2018-08-09 18:25:49,049 INFO  (main) [org.databene.CONFIG] Java version 1.8.0_131
+2018-08-09 18:25:49,049 INFO  (main) [org.databene.CONFIG] JVM Java HotSpot(TM) Client VM 25.131-b11 (Oracle Corporation)
+2018-08-09 18:25:49,049 INFO  (main) [org.databene.CONFIG] OS Windows 10 10.0 (x86)
+2018-08-09 18:25:49,064 INFO  (main) [org.databene.CONFIG] Installed JSR 223 Script Engines:
+2018-08-09 18:25:49,064 INFO  (main) [org.databene.CONFIG] - Oracle Nashorn[nashorn, Nashorn, js, JS, JavaScript, javascript, ECMAScript, ecmascript]
+2018-08-09 18:25:49,064 INFO  (main) [org.databene.CONFIG] Configured heap size limit: 247 MB
