@@ -10,10 +10,10 @@ nationalitiesList = ["Узбеки", "Армяне", "Казахи"]
 for i, nationality in enumerate(nationalitiesList):
     fileslist = [Path(x) for x in glob("./*" + nationality + "*.xlsx")]
     for filename in fileslist:
-        path =  Path("./Хитроумные ярлыки/") / Path(str(i+1) + ". " + nationality) / Path(str(filename)+".lnk")
-        target = filename
-        wDir = Path('.')
-        icon = filename
+        path =  Path.home() / 'Documents' / 'GitHub' / 'dissertation' / 'Месиво' / "Хитроумные ярлыки" / (str(i+1) + ". " + nationality) / (str(filename)+".lnk")
+        target = Path.home() / 'Documents' / 'GitHub' / 'dissertation' / 'Месиво' / filename
+        wDir = Path.home() / 'Documents' / 'GitHub' / 'dissertation' / 'Месиво' 
+        icon = Path.home() / 'Documents' / 'GitHub' / 'dissertation' / 'Месиво' / filename
          
         shell = Dispatch('WScript.Shell')
         shortcut = shell.CreateShortCut(str(path))
@@ -22,5 +22,5 @@ for i, nationality in enumerate(nationalitiesList):
         shortcut.IconLocation = str(icon)
         shortcut.save()        
         print(
-            Path("./Хитроумные ярлык/") / Path(str(i+1) + ". " + nationality) / filename
+            path
             )
