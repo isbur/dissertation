@@ -1,3 +1,5 @@
+# https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/
+
 from glob import glob
 import os
 from pathlib import Path
