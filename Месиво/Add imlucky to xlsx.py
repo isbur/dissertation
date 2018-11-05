@@ -64,8 +64,10 @@ for filename in glob.glob("*.xlsx"):
     
     for i, row in enumerate(readWorkSheet.iter_rows()):
         for j, cell in enumerate(row):
-            print(i, j, str(cell.value))
-            writeWorkSheet.write(i,j, cell.value)
+            
+            if cell.value:
+                print(i, j, str(cell.value))
+                writeWorkSheet.write(i,j, cell.value)
             
     readWorkBook.close()
     writeWorkBook.close()
