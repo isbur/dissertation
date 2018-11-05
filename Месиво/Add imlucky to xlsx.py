@@ -44,7 +44,8 @@ questions = [
     ]
 for filename in glob.glob("*.xlsx"):
     
-    if Path(filename).stem == "responses":
+    if Path(filename).stem in ["responses", "Армяне Типичные Трудовые"]:
+        print(Path(filename).stem + " passed .................................")
         continue
     
     readWorkBook = load_workbook(filename)
@@ -66,7 +67,7 @@ for filename in glob.glob("*.xlsx"):
         for j, cell in enumerate(row):
             
             if cell.value:
-                print(i, j, str(cell.value))
+                #print(i, j, str(cell.value))
                 writeWorkSheet.write(i,j, cell.value)
             
     readWorkBook.close()
