@@ -8,7 +8,7 @@ import winshell
 shell = Dispatch('WScript.Shell')
 nationalitiesList = ["Узбеки", "Армяне", "Казахи"]
 for i, nationality in enumerate(nationalitiesList):
-    fileslist = [Path(x) for x in glob("./*" + nationality + "*.xlsx")]
+    fileslist = [Path(x) for x in glob("./*" + nationality + "*.xlsm")]
     for filename in fileslist:
         path =  Path.home() / 'Documents' / 'GitHub' / 'dissertation' / 'Месиво' / "Хитроумные ярлыки" / (str(i+1) + ". " + nationality) / (str(filename)+".lnk")
         target = Path.home() / 'Documents' / 'GitHub' / 'dissertation' / 'Месиво' / filename
