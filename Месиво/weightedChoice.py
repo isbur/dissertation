@@ -1,18 +1,29 @@
 import math
 import random
 
-def weightedChoice(weights):
+def weightedChoice(weights, qnumber=0):
     totals = []
     running_total = 0
-
+    #if qnumber == 34:
+        #print(weights)
     for w in weights:
-        #print(w)
-        running_total += w
-        totals.append(running_total)
-
+        #if qnumber == 34:
+            #print(w, type(w))
+        if ( type(w)==type(1.0) ) or ( type(w)==type(1) ):
+            #if qnumber == 34:
+                #print("Hello")
+            running_total += w
+            totals.append(running_total)
+    
     rnd = random.random() * running_total
+    #if qnumber == 34:
+        #print(rnd, totals)
     for i, total in enumerate(totals):
+        #if qnumber == 34:
+            #print(rnd, total, i) 
         if rnd < total:
+            if qnumber == 34:
+                return i + 20
             return i
 
 #Distributions = [
@@ -34,9 +45,12 @@ def weightedChoice(weights):
 
 def generateAnswer(myRespondentTypeObject):
     Answer = []
-    for Distribution in myRespondentTypeObject.Distributions:
-        #print(Distribution)
-        Answer.append(weightedChoice(Distribution))
+    for i, Distribution in enumerate(myRespondentTypeObject.Distributions):
+        #print(i)
+        #if i ==34:
+            #print(i, ": ", Distribution)
+        Answer.append(weightedChoice(Distribution, i))
+    #print(Answer)
     
     return Answer
     

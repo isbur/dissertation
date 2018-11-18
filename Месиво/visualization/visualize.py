@@ -42,7 +42,7 @@ for Label in Labels:
     #if count == 3:
     #    break
     count += 1
-    if (count > 2) and (count < 11):
+    if (count > 0) and (count < 11):
         
         fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
         column = [cell.value for cell in [column for column in ws.iter_cols(min_col=count, max_col=count)][0]][1:]
@@ -73,6 +73,9 @@ for Label in Labels:
         if count == 21:
             
             column = [cell.value for cell in [column for column in ws.iter_cols(min_col=count+14, max_col=count+14)][0]][1:]
+            print(column)
+                  
+                  
             plt.hist( column, bins = range(len(np.unique(column))+1) )
             plt.savefig("Вопрос "+str(count)+".png")
             plt.close()

@@ -10,23 +10,21 @@ from os.path import isfile, join
 
 N = 1534
 
-RespondentTypes = {}
-onlyfiles = [f for f in listdir("./") if isfile(join("./", f))]
-for file in onlyfiles:
-    if file.find(".xlsx") != -1:
-        if file.find("$") == -1:
-            RespondentTypes[file[0:len(file)-5]] = RespondentType.setViaFile(file)
-
 #RespondentTypesWeights = {
     #"Узбеки без семьи": 700, # https://ru.wikipedia.org/wiki/%D0%9D%D0%B0%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B
-    #"Армяне": 500,
+    #"Армяне Типичные Трудовые": 500,
     #"Казахи-студенты": 300
 #}
 RespondentTypesWeights = {
-    "Узбеки без семьи": 1,
-    "Армяне": 0,
+    "Узбеки без семьи": 0,
+    "Армяне Типичные Трудовые": 1,
     "Казахи-студенты": 0
     }
+
+RespondentTypes = {}
+for stem in list(RespondentTypesWeights.keys()):
+    RespondentTypes[stem] = RespondentType.setViaFile(stem + ".xlsm")
+
 
 ResponsesTable = []
 for i in range(N):
