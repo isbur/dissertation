@@ -13,7 +13,7 @@ class RespondentType:
     
     @classmethod
     def setViaFile(cls, my_filename):
-        wb = load_workbook(filename = my_filename)
+        wb = load_workbook(filename = './Rules/'+my_filename)
         ws = wb.active
         
         Distributions = []

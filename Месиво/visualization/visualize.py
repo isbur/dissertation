@@ -3,7 +3,7 @@ import numpy as np
 from openpyxl import load_workbook
 from docx import *
 
-wb = load_workbook("../responses.xlsx")
+wb = load_workbook("../main_generator/responses.xlsx")
 ws = wb.active
 
 #a = plt.hist( [cell.value for cell in np.array(ws['E'])][1:] )
@@ -11,7 +11,7 @@ ws = wb.active
 #a = plt.pie( hist[0] )
 #a = plt.pie( hist[0], labels=hist[1][:-1])
 
-wd = Document("../Anketa.docx")
+wd = Document("../main_generator/Anketa.docx")
 count = 0
 Labels = []
 for paragraph in wd.paragraphs:
