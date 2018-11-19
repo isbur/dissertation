@@ -80,6 +80,7 @@ for Label in Labels:
             plt.close()
             continue
         
+        print(count)
         fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
         column = [cell.value for cell in [column for column in ws.iter_cols(min_col=count+14, max_col=count+14)][0]][1:]
         hist = np.histogram(column, bins = range(0, len(Labels[count-1][1:])+1 ) )
