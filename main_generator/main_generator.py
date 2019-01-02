@@ -5,24 +5,27 @@ from numpy import *
 from openpyxl import Workbook
 from operator import add
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, dirname
+import sys
 
 
 # Сделать так, чтобы всё это передавалось как параметры вызова, да ещё и с помощью файлов
 
-
-N = 1534
+if len(sys.argv)==6:
+    N = int(sys.argv[1])
+    UWeight, AWeight, KWeight =  sys.argv[2],  sys.argv[3],  sys.argv[4]
+    Postfix = sys.argv[5]
+else:
+    print("Wrong number of arguments")
+    sys.exit(1)
+    
 
 RespondentTypesWeights = {
-    "Узбеки без семьи": 700, # https://ru.wikipedia.org/wiki/%D0%9D%D0%B0%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B
-    "Армяне Типичные Трудовые": 500,
-    "Казахи-студенты": 300
+    "Узбеки без семьи": UWeight, 
+    "Армяне Типичные Трудовые": AWeight,
+    "Казахи-студенты": KWeight
 }
-#RespondentTypesWeights = {
-    #"Узбеки без семьи": 0,
-    #"Армяне Типичные Трудовые": 1,
-    #"Казахи-студенты": 0
-    #}
+
 
 RespondentTypes = {}
 for stem in list(RespondentTypesWeights.keys()):
@@ -78,6 +81,7 @@ ws.append([
     ])
 for Response in ResponsesTable:
     ws.append(Response)
-wb.save('responses.xlsx')
+    
+wb.save( join(dirname(__file__), '../common/' + 'responses' + Postfix + '.xlsx') )
 
     

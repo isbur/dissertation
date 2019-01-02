@@ -1,6 +1,7 @@
 from Equation import Expression
 from openpyxl import load_workbook
 from operator import add, mul
+import os
 import re 
 
 # filename = "Казахи-студенты.xlsx"
@@ -13,7 +14,8 @@ class RespondentType:
     
     @classmethod
     def setViaFile(cls, my_filename):
-        wb = load_workbook(filename = './Rules/'+my_filename)
+        dirname = os.path.dirname(__file__)
+        wb = load_workbook(filename = os.path.join(dirname, './Rules/'+my_filename) )
         ws = wb.active
         
         Distributions = []

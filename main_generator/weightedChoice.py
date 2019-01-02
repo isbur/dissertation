@@ -22,7 +22,6 @@ def generateAnswer(myRespondentTypeObject):
         Answer.append(weightedChoice(Distribution, i))
         if i == 34:
             Answer[len(Answer)-1] += 20
-    print(Answer)
     return Answer
     
     
