@@ -4,6 +4,7 @@ import numpy as np
 from openpyxl import load_workbook
 import os
 import sys
+from textwrap import fill
 
 
 if len(sys.argv)==2:
@@ -16,11 +17,7 @@ wb = load_workbook( os.path.join(dirname, "../common/responses" + Postfix + ".xl
 ws = wb.active
 
 
-#a = plt.hist( [cell.value for cell in np.array(ws['E'])][1:] )
-#hist = np.histogram([cell.value for cell in np.array(ws['G'])][1:], bins = [0,1,2,3,4,5] )
-#a = plt.pie( hist[0] )
-#a = plt.pie( hist[0], labels=hist[1][:-1])
-
+# Parse labels
 wd = Document( os.path.join(dirname, "../common/Anketa.docx") )
 questionNumber = 0
 Labels = []
@@ -43,6 +40,10 @@ for paragraph in wd.paragraphs:
         continue
     
 
+# Make plots
+#def buildMyLovelyPie(ws):
+#    # Preparation
+#    fig, ax = plt.subplots(figsize=(6, 8), subplot_kw=dict(aspect="equal", anchor = "N"))
 
 questionNumber = 0
 for Label in Labels:
@@ -65,11 +66,22 @@ for Label in Labels:
             colIndex = questionNumber
         else:
             colIndex = questionNumber + 14
-        fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
+        # Preparation
+        #fig, ax = plt.subplots(ncols = 2, figsize=(6, 3), subplot_kw=dict(aspect="equal"))
+        fig, ax = plt.subplots(figsize=(6, 8), subplot_kw=dict(aspect="equal", anchor = "N"))
+        # Extract data
         column = [cell.value for cell in [column for column in ws.iter_cols(min_col=colIndex, max_col=colIndex)][0]][1:]
-        curChartLabels = Labels[questionNumber-1][1:]
+        curChartLabels = [fill(x, 60) for x in Labels[questionNumber-1][1:]]
+        # Count values
         hist = np.histogram(column, bins = range(0, len(curChartLabels)+1 ) )
-        wedges, texts = ax.pie( hist[0], labels = curChartLabels)           
+        # Extract data and omit zeros
+        hist_data = [x for x in hist[0] if x != 0]
+        hist_labels = [curChartLabels[i] for i, x in enumerate(hist[0]) if x != 0]
+        # Plot 'em all!
+        wedges, texts, autotexts = ax.pie( hist_data, autopct = lambda pct: "{:.1f}%".format(pct), pctdistance = 1.3)
+        ax.legend(wedges, hist_labels,
+                  loc="center",
+                  bbox_to_anchor=(0.5, -0.2))        
     
     elif decision == '911':
         heights = []
@@ -91,8 +103,11 @@ for Label in Labels:
         sys.exit()
 
     # Universal ending
-    curChartTitle = Labels[questionNumber-1][0]
-    ax.set_title(curChartTitle)
+    
+    #### Better be used while creating summary.docx
+    #curChartTitle = Labels[questionNumber-1][0]
+    #ax.set_title(curChartTitle)
+    
     plt.savefig( os.path.join(dirname, "Вопрос "+str(questionNumber)+Postfix+".png") )
     plt.close()
        
