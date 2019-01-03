@@ -1,3 +1,4 @@
+import collections
 from docx import *
 import matplotlib.pyplot as plt
 import numpy as np
@@ -41,16 +42,37 @@ for paragraph in wd.paragraphs:
     
 
 # Make plots
-#def buildMyLovelyPie(ws):
-#    # Preparation
-#    fig, ax = plt.subplots(figsize=(6, 8), subplot_kw=dict(aspect="equal", anchor = "N"))
+def buildMyLovelyPie(column, curChartLabels, myBins = 0):
+    if not myBins:
+        myBins = range(0, len(curChartLabels)+1 )
+    # Preparation
+    fig, ax = plt.subplots(figsize=(6, 8), subplot_kw=dict(aspect="equal", anchor = "N"))
+    # Count values
+    hist = np.histogram(column, bins =  myBins)
+    # Extract data and omit zeros
+    hist_data = [x for x in hist[0] if x != 0]
+    hist_labels = [curChartLabels[i] for i, x in enumerate(hist[0]) if x != 0]
+    # Plot 'em all!
+    wedges, texts, autotexts = ax.pie( hist_data, autopct = lambda pct: "{:.1f}%".format(pct), pctdistance = 1.3)
+    ax.legend(wedges, hist_labels,
+              loc="center",
+              bbox_to_anchor=(0.5, -0.2))     
+    return (fig, ax)
+
+
+def getColumn(ws, colIndex):
+    column = [cell.value for cell in [column for column in ws.iter_cols(min_col=colIndex, max_col=colIndex)][0]][1:]
+    return column
+
 
 questionNumber = 0
-for Label in Labels:
+sub11 = 0
+while (questionNumber < len(Labels)):
     
-    
+    prelabels = 0
+    AddictiveString = ""
     questionNumber += 1
-    
+    questionNumberCopy = questionNumber
     
     # Make a choice!
     if questionNumber == 11:
@@ -66,37 +88,34 @@ for Label in Labels:
             colIndex = questionNumber
         else:
             colIndex = questionNumber + 14
-        # Preparation
-        #fig, ax = plt.subplots(ncols = 2, figsize=(6, 3), subplot_kw=dict(aspect="equal"))
-        fig, ax = plt.subplots(figsize=(6, 8), subplot_kw=dict(aspect="equal", anchor = "N"))
         # Extract data
-        column = [cell.value for cell in [column for column in ws.iter_cols(min_col=colIndex, max_col=colIndex)][0]][1:]
-        curChartLabels = [fill(x, 60) for x in Labels[questionNumber-1][1:]]
-        # Count values
-        hist = np.histogram(column, bins = range(0, len(curChartLabels)+1 ) )
-        # Extract data and omit zeros
-        hist_data = [x for x in hist[0] if x != 0]
-        hist_labels = [curChartLabels[i] for i, x in enumerate(hist[0]) if x != 0]
-        # Plot 'em all!
-        wedges, texts, autotexts = ax.pie( hist_data, autopct = lambda pct: "{:.1f}%".format(pct), pctdistance = 1.3)
-        ax.legend(wedges, hist_labels,
-                  loc="center",
-                  bbox_to_anchor=(0.5, -0.2))        
+        column = getColumn(ws, colIndex)
+        curChartLabels = [fill(x, 60) for x in list(map(str, Labels[questionNumber-1][1:]))]         
+             
     
     elif decision == '911':
-        heights = []
-        for i in range(15):
-            column = [cell.value for cell in [column for column in ws.iter_cols(min_col=questionNumber+i, max_col=questionNumber+i)][0]][1:]
-            hist = np.histogram(column, bins = range(0, 3) ) 
-            heights.append(hist[0][0])
-        fig, ax = plt.subplots()
-        barplot = plt.bar(x = [x for x in range(1, 16)], height=heights)
+        sub11 += 1
+        AddictiveString = "."+str(sub11)
+        questionNumber -= 1
+        if sub11 == 15:
+            questionNumber += 1
+        colIndex = questionNumber + sub11 - 1
+        column = getColumn(ws, colIndex)
+        curChartLabels = ["Да", "Нет"]
+
         
     elif decision == 'Make a roll!':
-        column = [cell.value for cell in [column for column in ws.iter_cols(min_col=questionNumber+14, max_col=questionNumber+14)][0]][1:]
-        uniqueItemsList = list(map(float, np.unique(column)))
-        plt.hist( column, bins = uniqueItemsList + [uniqueItemsList[-1]], rwidth = 0.5, align = "left" )
-        plt.xticks(uniqueItemsList)
+        colIndex = questionNumber + 14
+        column = getColumn(ws, colIndex)
+        unitedColumn = [x - x % 7 for x in column]
+        unitedColumn.sort()
+        column = unitedColumn
+        prelabels = list(collections.OrderedDict([(x, 1) for x in column]).keys())
+        curChartLabels = [str(x)+"-"+str(x+6) for x in prelabels]
+        print(column)
+        print(curChartLabels)
+        
+
             
     else:
         print('No (?) decision was made')
@@ -108,6 +127,12 @@ for Label in Labels:
     #curChartTitle = Labels[questionNumber-1][0]
     #ax.set_title(curChartTitle)
     
-    plt.savefig( os.path.join(dirname, "Вопрос "+str(questionNumber)+Postfix+".png") )
+    # Bake pies
+    if (prelabels):
+        fig, ex = buildMyLovelyPie(column, curChartLabels, prelabels+[prelabels[-1]+7])
+    else:
+        fig, ex = buildMyLovelyPie(column, curChartLabels)
+        
+    plt.savefig( os.path.join(dirname, "Вопрос "+str(questionNumberCopy)+AddictiveString+Postfix+".png") )
     plt.close()
        
