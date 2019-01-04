@@ -33,12 +33,12 @@ class RespondentType:
                     #print("Hey!!!!", my_filename)
                 
                 if cell.value == "f:":
-                    if enumerator == 20:
-                        print("Hello!")
+                    print("Hello!")
                     i, j = cell.row, cell.col_idx
                     fn = Expression(str(ws.cell(row = i, column = j + 1).value), "x")
                     print(fn)
                     Distribution = Distribution + [float(fn(x)) for x in range(ws.cell(row = i, column = j + 2).value, ws.cell(row = i, column = j + 3).value)]
+                    print(Distribution)
                     break
                     
                 

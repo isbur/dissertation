@@ -107,11 +107,13 @@ while (questionNumber < len(Labels)):
     elif decision == 'Make a roll!':
         colIndex = questionNumber + 14
         column = getColumn(ws, colIndex)
-        unitedColumn = [x - x % 7 for x in column]
+        Categories = [(18, 25), (26, 32), (33, 40), (41, 49), (50, 60)]
+        print(column)
+        unitedColumn = [j[0] for j in [ [i for i, dia in enumerate(Categories) if (dia[0] <= x and x <= dia[1])] for x in column] if len(j) != 0]
+        print(unitedColumn)
         unitedColumn.sort()
         column = unitedColumn
-        prelabels = list(collections.OrderedDict([(x, 1) for x in column]).keys())
-        curChartLabels = [str(x)+"-"+str(x+6) for x in prelabels]
+        curChartLabels = [str(x[0])+"-"+str(x[1]) for x in Categories]
         print(column)
         print(curChartLabels)
         
@@ -119,7 +121,7 @@ while (questionNumber < len(Labels)):
             
     else:
         print('No (?) decision was made')
-        sys.exit()
+        sys.exit(2)
 
     # Universal ending
     
