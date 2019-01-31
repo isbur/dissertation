@@ -2,6 +2,7 @@ from Equation import Expression
 from openpyxl import load_workbook
 from operator import add, mul
 import os
+from py_expression_eval import Parser
 import re 
 
 # filename = "Казахи-студенты.xlsx"
@@ -35,9 +36,12 @@ class RespondentType:
                 if cell.value == "f:":
                     print("Hello!")
                     i, j = cell.row, cell.col_idx
-                    fn = Expression(str(ws.cell(row = i, column = j + 1).value), "x")
-                    print(fn)
-                    Distribution = Distribution + [float(fn(x)) for x in range(ws.cell(row = i, column = j + 2).value, ws.cell(row = i, column = j + 3).value)]
+                    str_expr = str(ws.cell(row = i, column = j + 1).value)
+                    print(str_expr)
+                    
+                    parser = Parser()
+                    expr = parser.parse(str_expr)
+                    Distribution = Distribution + [float(expr.evaluate({'x':x})) for x in range(ws.cell(row = i, column = j + 2).value, ws.cell(row = i, column = j + 3).value)]
                     print(Distribution)
                     break
                     

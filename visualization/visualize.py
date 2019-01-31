@@ -69,10 +69,15 @@ questionNumber = 0
 sub11 = 0
 while (questionNumber < len(Labels)):
     
+    
+    
     prelabels = 0
     AddictiveString = ""
     questionNumber += 1
     questionNumberCopy = questionNumber
+    
+    if questionNumber != 21:
+        continue    
     
     # Make a choice!
     if questionNumber == 11:
