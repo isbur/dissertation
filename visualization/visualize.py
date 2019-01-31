@@ -11,8 +11,10 @@ from textwrap import fill
 if len(sys.argv)==2:
     Postfix = sys.argv[1]
 else:
+    Postfix = "A"
     print("Wrong number of arguments")
-    sys.exit(1)
+    print("Continue with A postfix")
+    #sys.exit(1)
 dirname = os.path.dirname(__file__)
 wb = load_workbook( os.path.join(dirname, "../common/responses" + Postfix + ".xlsx") )
 ws = wb.active
@@ -37,7 +39,14 @@ for paragraph in wd.paragraphs:
         continue
     
     if paragraph.style.name == 'List Paragraph':
-        Labels[len(Labels) - 1].append(paragraph.text)
+        # Delete points
+        appendedText = paragraph.text
+        #print(appendedText)
+        if appendedText.rfind('.') != -1:
+            appendedText = appendedText[:-1:]
+        #print(appendedText)
+        #print()
+        Labels[len(Labels) - 1].append(appendedText)
         continue
     
 
@@ -53,10 +62,10 @@ def buildMyLovelyPie(column, curChartLabels, myBins = 0):
     hist_data = [x for x in hist[0] if x != 0]
     hist_labels = [curChartLabels[i] for i, x in enumerate(hist[0]) if x != 0]
     # Plot 'em all!
-    wedges, texts, autotexts = ax.pie( hist_data, autopct = lambda pct: "{:.1f}%".format(pct), pctdistance = 1.3)
+    wedges, texts, autotexts = ax.pie( hist_data, autopct = lambda pct: "{:.1f}%".format(pct), pctdistance = 1.2)
     ax.legend(wedges, hist_labels,
-              loc="center",
-              bbox_to_anchor=(0.5, -0.2))     
+              loc="upper center",
+              bbox_to_anchor=(0.5, 0))     
     return (fig, ax)
 
 
@@ -68,16 +77,12 @@ def getColumn(ws, colIndex):
 questionNumber = 0
 sub11 = 0
 while (questionNumber < len(Labels)):
-    
-    
-    
+    print('a')
     prelabels = 0
     AddictiveString = ""
     questionNumber += 1
     questionNumberCopy = questionNumber
     
-    if questionNumber != 21:
-        continue    
     
     # Make a choice!
     if questionNumber == 11:
@@ -140,6 +145,6 @@ while (questionNumber < len(Labels)):
     else:
         fig, ex = buildMyLovelyPie(column, curChartLabels)
         
-    plt.savefig( os.path.join(dirname, "Вопрос "+str(questionNumberCopy)+AddictiveString+Postfix+".png") )
+    plt.savefig( os.path.join(dirname, "Вопрос "+str(questionNumberCopy)+AddictiveString+Postfix+".png"), bbox_inches = 'tight' )
     plt.close()
        
