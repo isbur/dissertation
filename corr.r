@@ -114,11 +114,124 @@ for (i in c(1:nRows)){
         item = pureData9[i,j]
         oppose = pureData[j,i]
         if (is.na(item)) {
-          pureData9[i,j] = 0
+            pureData9[i,j] = 0
         } else if (is.na(oppose)){
             pureData9[j,i] = item
         } else if (item != oppose && item != 0) {
             pureData9[j,i] = item
-        }
+        } 
     }
 }
+
+
+#####################################
+# Matrizise ####
+#####################################
+pureData10 = data.matrix(pureData9)
+for (i in c(1:nRows)){
+    for (j in c(1:nCols)) {
+        item = pureData10[i,j]
+        if (is.na(item)) {
+            pureData10[i,j] = 0
+        } 
+    }
+}
+
+
+##########################################
+# -1 for each other excluding dummies ####
+##########################################
+pureData11 = pureData10
+D = pureData11
+for (i in c(1:nRows)){
+  for (j in c(1:nCols)) {
+    item = D[i,j]
+    
+    item.x = rownames(D)[i]
+    if (grepl("_", item.x, fixed = TRUE)) {
+        item.x.first = strsplit(item.x, split = "_")[[1]][1]
+        item.x.second = strsplit(item.x, split = "_")[[1]][2]
+    } else {
+      next
+    }
+    item.y = colnames(D)[j]
+    if (grepl("_", item.y, fixed = TRUE)) {
+      item.y.first = strsplit(item.y, split = "_")[[1]][1]
+      item.y.second = strsplit(item.y, split = "_")[[1]][2]
+    } else {
+      next
+    }
+    
+    if (item.x.first == item.y.first) {
+        if (i != j) {
+          pureData11[i,j] = -1
+        }
+    }
+    
+  }
+}
+
+
+#####################################
+# Get corr matrix ####
+#####################################
+pureData12 = pureData11
+D = pureData12
+
+# First, generate some corr matrix
+# install.packages("clusterGeneration")
+n = sqrt(length(D))
+library(clusterGeneration)
+B = rcorrmatrix(n)
+
+# Second, incorporate needed information to this matrix
+incorporate = function(n, B, D) {
+  nRows = n
+  nCols = n
+  for (i in c(1:nRows)){
+    for (j in c(1:nCols)) {
+      item = D[i,j]
+      if (item != 0) {
+        B[i,j] = D[i,j]
+      } 
+    }
+  }
+  return(B)
+}
+B = incorporate(n, B, D)
+
+# Third, approximate it with near PD matrix
+# install.packages("Matrix")
+library(Matrix)
+positify = function(B){
+    A = nearPD(B, corr = TRUE)
+    A = A[[1]]
+    D = A@x
+    n = sqrt(length(D))
+    D = matrix(D, nrow = n, ncol = n)
+    return(D)
+}
+
+# Some mad attempts
+i = 0
+m = 100
+B = incorporate(n, B, D)
+myDet = -1
+while (myDet < 0 || i < 100) {
+    B = positify(B)
+    B = incorporate(n, B, D)
+    myDet = det(B)
+    i = i + 1
+}
+
+pureData12 = B
+
+
+
+
+#####################################
+# Determinant ####
+#####################################
+myDet = det(pureData12)
+
+write.csv(pureData12, file = "corr.csv")
