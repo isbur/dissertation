@@ -28,4 +28,20 @@ for (postfix in Postfices) {
 }
 
 
+newD = D
+newD[7,5] = 0.9
+newD[5,7] = 0.9
+for (i in c(2:length(newD[,1]))) {
+    print(i)
+    minor = newD[1:i,1:i]
+    print(minor)
+    print(det(minor))
+    isPD = is.positive.semi.definite(minor)
+    print(isPD)
+    if(!isPD) {
+        break
+    }
+}
+
+
 
