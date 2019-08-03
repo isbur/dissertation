@@ -8,13 +8,13 @@ m <- ordsample(n, marginal, Sigma)
 # https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
 # system.file() is unnecessary and moreover harmful
 
-install.packages("xlsx")
-library("xlsx")
+
+
 
 
 #    file = read.xlsx(paste("responses", postfix, ".xlsx", sep=""), 1)
-
-
+# install.packages("xlsx")
+library("xlsx")
 library(devtools)
 source_gist(4676064) # as.data.frame(some list) -> some data.frame
 
@@ -29,8 +29,6 @@ for (postfix in Postfices) {
 
 
 newD = D
-newD[7,5] = 0.9
-newD[5,7] = 0.9
 for (i in c(2:length(newD[,1]))) {
     print(i)
     minor = newD[1:i,1:i]
@@ -44,4 +42,6 @@ for (i in c(2:length(newD[,1]))) {
 }
 
 
-
+eigen(D, only.values = TRUE)
+newD = D[1:40,1:40]
+eigen(newD, only.values = TRUE)

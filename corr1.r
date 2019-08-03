@@ -111,7 +111,11 @@ nCols = length(pureData9[1,])
 for (i in c(1:nRows)){
     for (j in c(1:nCols)) {
         item = pureData9[i,j]
-        oppose = pureData[j,i]
+        #oppose = pureData[j,i]
+        oppose = pureData9[j,i]
+        if (i == j) {
+            pureData9[i,j] = 1
+        }
         if (is.na(item)) {
             pureData9[i,j] = 0
         } else if (is.na(oppose)){
