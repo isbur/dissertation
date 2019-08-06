@@ -1,10 +1,10 @@
 ##############################
 # Get target probabilities
 ##############################
-getTargetProbabilities = function(responses){
+getTargetProbabilities = function(responses, cols = 1:length(responses)){
     probs = list()
     maxLen = 0
-    for (i in c(1:36)) {
+    for (i in cols) {
         item = table(responses[,i])
         len = length(item)
         if (len > maxLen) {
@@ -14,12 +14,13 @@ getTargetProbabilities = function(responses){
         # probs[[i]] = item
     }
     
-    for (i in c(1:36)) {
-        item = table(responses[,i])
-        len = length(item)
-        item = c(item, rep(0, maxLen - len))
-        probs[[i]] = item
-    }
+    # Was necessary for the previous way of data generation
+    # for (i in cols) {
+    #     item = table(responses[,i])
+    #     len = length(item)
+    #     item = c(item, rep(0, maxLen - len))
+    #     probs[[i]] = item
+    # }
     return(probs)
 }
 

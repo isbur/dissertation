@@ -3,7 +3,7 @@ library(zeallot)
 library(sets) # for tuple function inside evaluate_energy
 
 
-ITERATIONS_LIMIT = 10
+ITERATIONS_LIMIT = 1
 ENERGY_DROP_LIMIT = 0.05
 
 
@@ -22,6 +22,6 @@ while(energy_has_not_stopped_decreasing && count <= ITERATIONS_LIMIT){
     if (count >= REFERENCES_LIMIT && estimate < ENERGY_DROP_LIMIT) { # REFERENCES_LIMIT - see myPush.r
         energy_has_not_stopped_decreasing = FALSE
     }
-    c(Bresponses, memberImember) %<-% decrease_energy(Bresponses, memberImember)
+    c(Bresponses, memberImember) %<-% decrease_energy(Bresponses, memberImember, expected_corrs_matrix)
     count = count + 1
 }
