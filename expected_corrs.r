@@ -3,6 +3,7 @@
 # "a:b=x;c:d=y" - generate qualitive data and give certain prob to a factor 
 #       "a<1.0:b=c" for continuous FIRST
 
+# Check whether numeration is from 1 everywhere 
 expected_corrs_vector = c("национальность", "планы на будущее", "",
                           "национальность", "религия", "",
                           "национальность", "создание семьи", "",

@@ -89,22 +89,22 @@ y = mapply(getSpecificNumber, x, MoreArgs = list(nationalities_correspondence_ma
 SEresponses = cbind(SEresponses, y)
 
 
-# Balance language knowledge
-# 1. What influences (does influence?) on language knowledge?
-M = expected_corrs_matrix
-target_factor = "знание языка"
-start_factors = M[M[,2]==target_factor,1]
-start_factors
-# Let each variable have equal influence on target variable
-influence_amount = 1 / length(start_factors)
-# And now let's see how every variable is going to deal with their power
-for (factor in start_factors) {
-    rule = M[ (M[,1]==factor & M[,2] == target_factor),3]
-    if (rule == "") {
-        next
-    }
-    if (rule == "+" || rule == "-") {
-        
-    }
-}
+# # Balance language knowledge
+# # 1. What influences (does influence?) on language knowledge?
+# M = expected_corrs_matrix
+# target_factor = "знание языка"
+# start_factors = M[M[,2]==target_factor,1]
+# start_factors
+# # Let each variable have equal influence on target variable
+# influence_amount = 1 / length(start_factors)
+# # And now let's see how every variable is going to deal with their power
+# for (factor in start_factors) {
+#     rule = M[ (M[,1]==factor & M[,2] == target_factor),3]
+#     if (rule == "") {
+#         next
+#     }
+#     if (rule == "+" || rule == "-") {
+#         
+#     }
+# }
 

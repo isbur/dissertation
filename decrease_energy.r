@@ -2,58 +2,36 @@
 library(zeallot)
 
 
-NUMBER_OF_PERMUTATIONS = 1
-
-
-getRandomIndividual = function(responses) {
-    n = sample(1:length(responses[,1]), 1)
-    return(n)
-}
-
-
-########################################
-# IMO MOST COMPLEX FUNCTION IS HERE!!! #
-########################################
 improveTheIndividual = function(responses, id, expected_corrs_matrix) {
-    M = expected_corrs_matrix
+    
     answer = responses[id,]
     # dumb outupt for testing purposes
     # answer = sample(0:5, length(answer), replace = TRUE)
     
     count = 0
     for (question_name in names(responses)) {
-        print(question_name)
+        
         count = count + 1
         # Ignore first three question - these are totally independent values
-        if(count <= 3) {
-            print("variable is independent; no modification needed")
+        if(count <= 4) {
+            # print("variable is independent; no modification needed")
             next
         }
-        # get infromation about the type of generated data -> not here
-        #res = agrep(question_name, M[,2], ignore.case = TRUE, value = TRUE)
-        distances = list (
-                          cost = 10,
-                          deletions = 10,
-                          insertions = 2,
-                          substitutions = 2
-                          )
-        #res = M[agrepl(question_name, M[,2], max = distances, ignore.case = TRUE),1]
-        filtered_M = M[agrepl(question_name, M[,2], max = 5, ignore.case = TRUE),]
-        if(!is.matrix(filtered_M)){
-            filtered_M = matrix(filtered_M, ncol = 3, byrow = TRUE)
+        # for testing purposes
+        if (count >= 6) {
+            break
         }
-        print(filtered_M)
-        probs = getTargetProbabilities(responses, question_name) # See probs.r
-        # print(probs)
-        # Let each variable have equal influence on target variable
-        influence_amount = 1 / length(filtered_M[,1])
-        # And now let's see how every variable is going to deal with their power
-        for (row in filtered_M){
-            rule = row[3]
-            print(rule)
-        }
-        # get expected corrs information -> not here
-        # just do it
+        print(question_name)
+        
+        rows_selector = responses[,2]==responses[id,2] #### We need to save picture per nation ####
+        initial_probs = getProbabilities(responses, rows_selector = rows_selector, cols = question_name) # See probs.r
+        
+        final_probs = modifyProbabilities(question_name, initial_probs, expected_corrs_matrix)
+        
+        old_answer = answer[question_name]
+        answer[question_name] = getRandomAnswer(c(1:length(initial_probs)), final_probs)
+
+        # Swap with some existing answer
     }
     return(answer)
 }
@@ -64,6 +42,7 @@ decrease_energy_by_quant <- function(responses, memberImember, expected_corrs_ma
     rowToInsert = improveTheIndividual(responses, id, expected_corrs_matrix)
     responses[i,] = rowToInsert
     memberImember[i] = TRUE
+    # Check somewhere here whether proportions are not broken
     return(list(responses, memberImember))
 }
 
