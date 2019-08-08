@@ -1,12 +1,12 @@
 library(sets)
 
 
-REFERENCES_LIMIT = 5
+source("./common/constants.r")
 
 
 myPush = function(q, item) {
     pushback(q, item)
-    if (length(q) > REFERNCES_LIMIT) {
+    if (length(q) > MYPUSH_QUEUE_DEPTH) {
         pop(q)
     }
     return(q)

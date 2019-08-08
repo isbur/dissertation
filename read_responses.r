@@ -3,7 +3,7 @@ library("xlsx")
 Postfices = c("A","K","U")
 responses=data.frame()
 for (postfix in Postfices) {
-    file = read.xlsx(paste("responses", postfix, ".xlsx", sep=""), 1)
+    file = read.xlsx(paste("./data/responses", postfix, ".xlsx", sep=""), 1)
     file = as.data.frame(file)
     responses = rbind(responses,file)
 }
@@ -50,4 +50,4 @@ names = c("1. Страна",
 names(responses) = names
 
 
-n_individuals = length(responses[,1])
+# n_individuals = length(responses[,1])

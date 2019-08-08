@@ -3,8 +3,16 @@ library(zeallot)
 library(sets) # for tuple function inside evaluate_energy
 
 
-ITERATIONS_LIMIT = 1
-ENERGY_DROP_LIMIT = 0.05
+source("myPush.r")
+
+# source("read_responses.r")
+
+source("./common/expected_corrs.r")
+source("./common/constants.r")
+
+source("evaluate_energy.r")
+source("./DECREASE_ENERGY/decrease_energy.r", chdir = TRUE)
+source("estimate_energy_drop.r")
 
 
 # Investigate later how to make this values bound and how to make it possible to use either name
@@ -14,12 +22,12 @@ memberImember = rep(FALSE,length(responses[,1]))
 energy_has_not_stopped_decreasing = TRUE
 last_energies = queue()
 count = 1
-while(energy_has_not_stopped_decreasing && count <= ITERATIONS_LIMIT){
+while(energy_has_not_stopped_decreasing && count <= ENERGY_MINIMIZER_ITERATIONS_LIMIT){
     print(count)
     energy = evaluate_energy(Bresponses)
     last_energies = myPush(last_energies, energy)
     estimate = estimate_energy_drop(last_energies)
-    if (count >= REFERENCES_LIMIT && estimate < ENERGY_DROP_LIMIT) { # REFERENCES_LIMIT - see myPush.r
+    if (count >= MYPUSH_QUEUE_DEPTH && estimate < ENERGY_DROP_LIMIT) { 
         energy_has_not_stopped_decreasing = FALSE
     }
     c(Bresponses, memberImember) %<-% decrease_energy(Bresponses, memberImember, expected_corrs_matrix)
