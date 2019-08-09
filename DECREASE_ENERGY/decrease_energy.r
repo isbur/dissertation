@@ -19,8 +19,9 @@ decrease_energy_by_quant <- function(responses, memberImember, expected_corrs_ma
     # improve the whole row calling improveSomeAnswer() function for each question
     count = 0
     for (question_name in names(responses)) {
+        ANSWER_TO_EXCLUDE = 5
         count = count + 1
-        if( count < 4 || 4 < count){
+        if( count < ANSWER_TO_EXCLUDE || ANSWER_TO_EXCLUDE < count){
             next
         }
         print("Current question:")

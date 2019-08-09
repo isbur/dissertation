@@ -7,5 +7,16 @@ mygrepl = function(pattern, x){
     # )
     # return(agrepl(pattern, x, max.distance = metrics, ignore.case = TRUE))
     
-    return(agrepl(pattern, x, max.distance = 4))
+    count = 4
+    trial = agrepl(pattern, x, max.distance = count)
+    # print("Trying with count = "&count)
+    # print(trial)
+    while(identical(trial, rep(FALSE, length(x)))){
+        count = count + 1
+        trial = agrepl(pattern, x, max.distance = count)
+        # print("Trying with count = ", count)
+        # print(trial)
+    }
+    
+    return(trial)
 }

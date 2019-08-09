@@ -1,6 +1,6 @@
 variable_types_raw = c("1. Страна", "nominal",
           "2. Национальность", "nominal",
-          "3. Срок проживания", "ordinal",
+          "3. Срок проживания", "nominal", # rule in expected_corrs is like for  nominal data, hence adequate change is needed here
           "4. Место жительства", "nominal",
           "5. Планы на будущее", "nominal",
           "6. Знание языка", "ordinal",
