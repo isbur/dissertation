@@ -5,7 +5,7 @@ library(sets) # for tuple function inside evaluate_energy
 
 source("myPush.r")
 
-# source("read_responses.r")
+# source("read_responses.r", chdir = TRUE)
 
 source("./common/expected_corrs.r")
 source("./common/constants.r")

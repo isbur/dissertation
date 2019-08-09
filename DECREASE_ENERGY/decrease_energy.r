@@ -3,20 +3,32 @@ library(zeallot)
 
 
 source("./IMPROVE_SOME_ANSWER/improveSomeAnswer.r", chdir = TRUE)
-source("../common/constants.r", chdir = TRUE)
+source("../common/constants.r")
 
 
 decrease_energy_by_quant <- function(responses, memberImember, expected_corrs_matrix) {
-    # id = getRandomIndividual(responses)
-    id = 1
     
-    # choose some question_name
-    question_name = names(responses)[1]
+    id = sample(1:length(responses[,1]), 1)
+    print("Chosen id:")
+    print(id)
+    # Better to reduce sample vector only to those number for which memeberImember[id] == TRUE
+    if(memberImember[id] == TRUE) {
+        return(list(responses, memberImember)) # as is
+    }
     
-    # improve a row calling improveSomeAnswer() function for each question
-    improveSomeAnswer(responses, question_name, id, expected_corrs_matrix)
+    # improve the whole row calling improveSomeAnswer() function for each question
+    count = 0
+    for (question_name in names(responses)) {
+        count = count + 1
+        if( count < 4 || 4 < count){
+            next
+        }
+        print("Current question:")
+        print(question_name)
+        improveSomeAnswer(responses, question_name, id, expected_corrs_matrix)
+    }
     
-    # memberImember[i] = TRUE
+    memberImember[id] = TRUE
     # Check somewhere here whether proportions are not broken
     return(list(responses, memberImember))
 }

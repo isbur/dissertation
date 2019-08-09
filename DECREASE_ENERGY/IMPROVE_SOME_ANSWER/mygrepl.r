@@ -1,4 +1,11 @@
 # Shorthand for base::agrepl() 
 mygrepl = function(pattern, x){
-    return(agrepl(pattern, x, max = 5, ignore.case = TRUE))
+    # metrics = list(
+    #     deletions = 5,
+    #     substitutions = 5,
+    #     insertions = 5
+    # )
+    # return(agrepl(pattern, x, max.distance = metrics, ignore.case = TRUE))
+    
+    return(agrepl(pattern, x, max.distance = 4))
 }
