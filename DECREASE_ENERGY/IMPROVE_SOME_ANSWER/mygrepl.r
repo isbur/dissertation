@@ -1,21 +1,28 @@
 # Shorthand for base::agrepl() 
 mygrepl = function(pattern, x){
-    # metrics = list(
-    #     deletions = 5,
-    #     substitutions = 5,
-    #     insertions = 5
-    # )
-    # return(agrepl(pattern, x, max.distance = metrics, ignore.case = TRUE))
+    
+    MYGREPL_ITERATIONS_LIMIT = 8
+    
+    cat("Pattern to search:\t", pattern, "\n")
     
     count = 4
     trial = agrepl(pattern, x, max.distance = count)
-    # print("Trying with count = "&count)
-    # print(trial)
-    while(identical(trial, rep(FALSE, length(x)))){
+    cat("Trying with count = ", count, "\n")
+    print(trial)
+    iterations_limit_has_been_reached = FALSE
+    while( identical(trial, rep(FALSE, length(x))) && !iterations_limit_has_been_reached ) { # Second condition is needed to avoid whole-name matching (not sure it is effective)
         count = count + 1
         trial = agrepl(pattern, x, max.distance = count)
-        # print("Trying with count = ", count)
-        # print(trial)
+        cat("Trying with count = ", count, "\n")
+        print(trial)
+        if (count >= MYGREPL_ITERATIONS_LIMIT) {
+            iterations_limit_has_been_reached = TRUE
+        }
+    }
+    
+    if (iterations_limit_has_been_reached) {
+        cat("Need to generate more data\n\n")
+        return("Need to generate more data")
     }
     
     return(trial)
