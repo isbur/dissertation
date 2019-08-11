@@ -3,6 +3,8 @@ source("./common/constants.r")
 
 decide_whether_energy_has_stopped_decreasing_or_not = function() {
     
+    cat("Energy decreaser iteration counter =", count, "\n")
+    
     if (count >= MYPUSH_QUEUE_DEPTH && estimate < ENERGY_DROP_LIMIT) { 
         energy_has_not_stopped_decreasing = FALSE
     }

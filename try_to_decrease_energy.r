@@ -1,4 +1,4 @@
-#library(seqinr) # just to use swap function!!!!111
+library(sets)
 library(zeallot)
 
 
@@ -8,39 +8,59 @@ source("./common/expected_corrs.r")
 source("main_presets.r") # definition of memberImember
 
 
-decrease_energy_by_quant <- function(responses, memberImember, expected_corrs_matrix) {
-    
-    id = sample(1:length(responses[,1]), 1)
-    print("Chosen id:")
-    print(id)
-    # Better to reduce sample vector only to those number for which memeberImember[id] == TRUE
-    if(memberImember[id] == TRUE) {
-        return(list(responses, memberImember)) # as is
-    }
+improve_answers_of_the_ <- function(individual) {
     
     # improve the whole row calling improveSomeAnswer() function for each question
+    #+ debug code
     count = 0
-    for (question_name in names(responses)) {
-        ANSWER_TO_EXCLUDE = 5
+    #- debug code
+    for (question in Set_of_questions) {
+        #+ debug code
+        QUESTION_TO_LEAVE = 5
         count = count + 1
-        if( count < ANSWER_TO_EXCLUDE || ANSWER_TO_EXCLUDE < count){
+        if( count < QUESTION_TO_LEAVE || QUESTION_TO_LEAVE < count){
             next
         }
+        #- debug code
         print("Current question:")
-        print(question_name)
-        improveSomeAnswer(responses, question_name, id, expected_corrs_matrix)
+        print(question)
+        improve_answer_to_(question)
     }
     
-    memberImember[id] = TRUE
-    # Check somewhere here whether proportions are not broken
+    # memberImember[id] = TRUE
+    
+    # Check somewhere here whether proportions are not broken?
     return(list(responses, memberImember))
 }
 
 
-try_to_decrease_energy = function(responses) {
-    for (number in 1:NUMBER_OF_ENERGY_QUANTS_TO_DECREASE) {
-        c(responses, memberImember) %<-% decrease_energy_by_quant(responses, memberImember, expected_corrs_matrix)
+improve_their_answers = function() {
+    for (individual in Individuals_sample) {
+        improve_answers_of_the_(individual)
     }
-    assign("responses", responses, envir = .GlobalEnv)
-    assign("memberImember", memberImember, envir = .GlobalEnv)
+}
+
+
+get_some_random_dude = function(){
+    n = length(Responses[,1]) # get length of e.g. first row
+    dude = sample(1:n[!MemberImember])
+    assign("Individuals_sample", dude, envir = .GlobalEnv)
+}
+
+
+choose_some_individuals = function(Responses) {
+    get_some_random_dude()
+}
+
+
+try_to_decrease_energy = function(Responses) {
+    
+    choose_some_individuals(Responses)
+    improve_their_answers()
+    # for (number in 1:NUMBER_OF_ENERGY_QUANTS_TO_DECREASE) {
+    #     c(responses, memberImember) %<-% decrease_energy_by_quant(responses, memberImember, expected_corrs_matrix)
+    # }
+    # assign("responses", responses, envir = .GlobalEnv)
+    # assign("memberImember", memberImember, envir = .GlobalEnv)
+    return(Responses)
 }
