@@ -2,8 +2,10 @@
 library(zeallot)
 
 
-source("./IMPROVE_SOME_ANSWER/improveSomeAnswer.r", chdir = TRUE)
-source("../common/constants.r")
+source("./DECREASE_ENERGY/IMPROVE_SOME_ANSWER/improveSomeAnswer.r", chdir = TRUE)
+source("./common/constants.r")
+source("./common/expected_corrs.r")
+source("main_presets.r") # definition of memberImember
 
 
 decrease_energy_by_quant <- function(responses, memberImember, expected_corrs_matrix) {
@@ -35,10 +37,10 @@ decrease_energy_by_quant <- function(responses, memberImember, expected_corrs_ma
 }
 
 
-# returns two list-like objects
-decrease_energy = function(responses, memberImember, expected_corrs_matrix) {
+try_to_decrease_energy = function(responses) {
     for (number in 1:NUMBER_OF_ENERGY_QUANTS_TO_DECREASE) {
         c(responses, memberImember) %<-% decrease_energy_by_quant(responses, memberImember, expected_corrs_matrix)
     }
-    return(list(responses, memberImember))
+    assign("responses", responses, envir = .GlobalEnv)
+    assign("memberImember", memberImember, envir = .GlobalEnv)
 }
