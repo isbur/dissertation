@@ -3,8 +3,10 @@ library(sets)
 evaluate_energy = function(responses) {
     p_energy = 0
     # Check please is there sufficient amount of names
+    # count = 0
     for (pair in combn(names(responses),2, tuple) ) {
-        # print(pair)
+        # count = count + 1
+        # cat("pair", count, "\n")
         tbl = table(responses[,pair[1]], responses[,pair[2]])
         res = chisq.test(tbl)
         # print(res$p.value)

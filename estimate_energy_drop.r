@@ -1,11 +1,13 @@
 library(sets)
 
 
-source("myPush.r")
+source("./auxiliary/myPush.r")
 
 
 energies.append = function(new_energy){
+    checkout(energies)
     energies = myPush(energies, new_energy)
+    register(energies)
 }
 
 
