@@ -1,5 +1,7 @@
-source("./improveSomeAnswer_low.r", local = TRUE, chdir=TRUE)
-source("./look_for_variables_influencing_on_answer.r", local = TRUE)#, chdir = TRUE)
+# persistent_source("./improveSomeAnswer_low.r", local = TRUE, chdir=TRUE)
+# persistent_source("./look_for_variables_influencing_on_answer.r", local = TRUE)#, chdir = TRUE)
+source("improveSomeAnswer_low.r")
+source("look_for_variables_influencing_on_answer.r")
 
 
 change_answer_generation_settings = function () {

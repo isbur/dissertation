@@ -1,3 +1,6 @@
+library(zeallot)
+
+
 getOrdNom = function(decisive_answer, initial_probs, decomposed_rule){
     
     final_probs = initial_probs

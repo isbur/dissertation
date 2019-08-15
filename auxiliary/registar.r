@@ -2,6 +2,11 @@ library(rlang)
 library(dequer)
 
 
+# persistent_source("../meta/settings.r")
+source("../meta/settings.r")
+unpack(registar_settings)
+
+
 initialize = function(){
     Master_Registry = env(
         registries_stack = stack()
@@ -11,7 +16,6 @@ initialize = function(){
 
 
 appendRegistry = function(registry_name){
-    # registry_name = deparse(substitute(registry))
     Master_Registry = get("Master_Registry", envir = .GlobalEnv)
     registries_stack = get("registries_stack", envir = Master_Registry)
     
@@ -52,7 +56,30 @@ checkout = function(object) {
     registries_stack = get("registries_stack", envir = Master_Registry)
     registry_name = as.list(registries_stack)[[1]]
     Registry = get(registry_name, envir = Master_Registry)
-    object_contents = get(object_name, envir = Registry)
+    
+    object_contents = tryCatch({
+        get(object_name, envir = Registry)
+    }, error = checkoutErrorHandler)
     
     assign(object_name, object_contents, envir = parent.frame())
+}
+
+
+checkoutErrorHandler = function(error) {
+    if (should_I_send_checkout_error_outside_registar == TRUE){
+        externalCheckoutErrorHandler(error)
+    } else {
+        stop(error)
+    }
+}
+
+
+if (should_I_send_checkout_error_outside_registar == TRUE) {
+    persistent_source(paste0(externalCheckoutErrorHandler_location, externalCheckoutErrorHandler_name, ".r"))
+}
+
+
+externalCheckoutErrorHandler = function(error){
+    function_name = externalCheckoutErrorHandler_name
+    do.call(function_name, list(error))
 }

@@ -40,3 +40,13 @@ foodweb(lwd = 2)
 
 
 
+# Provided with RStudio as far as I understand
+source("./auxiliary/clean_global_env.r", local = .GlobalEnv)
+source("main.r")
+traceback()
+
+library(profvis)
+profvis({source("main.r")})
+
+
+

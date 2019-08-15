@@ -1,4 +1,4 @@
-source("./common/constants.r")
+persistent_source("./common/constants.r")
 
 
 decide_whether_energy_has_stopped_decreasing_or_not = function() {

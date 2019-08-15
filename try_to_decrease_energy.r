@@ -2,10 +2,10 @@ library(sets)
 library(zeallot)
 
 
-source("./auxiliary/registar.r")
-source("./IMPROVE_SOME_ANSWER/improveSomeAnswer.r", chdir = TRUE, local = TRUE)
-source("./common/constants.r")
-source("./common/expected_corrs.r")
+persistent_source("./auxiliary/registar.r", chdir = TRUE)
+persistent_source("./IMPROVE_SOME_ANSWER/improveSomeAnswer.r", chdir = TRUE, local = TRUE)
+persistent_source("./common/constants.r")
+persistent_source("./common/expected_corrs.r")
 
 
 # Test needed: "individual" cannot be excluded so easily
@@ -13,17 +13,17 @@ improve_answers_of_the_ <- function(individual) {
     
     register(individual)
     # improve the whole row calling improveSomeAnswer() function for each question
-    # #+ debug code
-    # count = 0
-    # #- debug code
+    #+ debug code
+    count = 0
+    #- debug code
     for (question in Set_of_questions) {
-        # #+ debug code
-        # QUESTION_TO_LEAVE = 4
-        # count = count + 1
-        # if( count < QUESTION_TO_LEAVE || QUESTION_TO_LEAVE < count){
-        #     next
-        # }
-        # #- debug code
+        #+ debug code
+        QUESTION_TO_LEAVE = 4
+        count = count + 1
+        if( count < QUESTION_TO_LEAVE || QUESTION_TO_LEAVE < count){
+            next
+        }
+        #- debug code
         print("Current question:")
         print(question)
         register(question)

@@ -1,16 +1,25 @@
 library("xlsx")
 
+# persistent_source("./common/names.r")
 source("./common/names.r")
 
-read_responses = function(){
-
+read_responses = function(filename = NULL, path_to_dir = ""){
+    
+    
+    if(!is.null(filename)){
+       # return( custom_read_responses(file.path(path_to_dir, filename)) )
+        return( custom_read_responses(filename) )
+    }
+    
+    
     if(!exists("responses_reserved_copy")) {
         
         cat("Hard way was chosen\n")
         Postfices = c("A","K","U")
         responses=NULL
         for (postfix in Postfices) {
-            file = read.xlsx(paste("./data/responses", postfix, ".xlsx", sep=""), 1)
+            filename = paste("./data/responses", postfix, ".xlsx", sep="")
+            file = read.xlsx(filename, 1)
             file = as.data.frame(file)
             responses = rbind(responses,file)
         }
@@ -26,4 +35,10 @@ read_responses = function(){
     }
 
     return(responses)
+}
+
+
+custom_read_responses = function(filename) {
+    file = read.xlsx(filename, 1)
+    file = as.data.frame(file)
 }

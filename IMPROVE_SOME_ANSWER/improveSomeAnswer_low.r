@@ -1,19 +1,28 @@
+# persistent_source("../common/expected_corrs.r")
+# 
+# persistent_source("../auxiliary/mygrepl.r", chdir = TRUE)
+# persistent_source("./handlers/getOrdNom.r")
+# persistent_source("./handlers/getNomNom.r")
+# persistent_source("./getters_from_data/chooseAppropriateHandler.r", chdir = TRUE)
+
+
 source("../common/expected_corrs.r")
 
 source("../auxiliary/mygrepl.r", chdir = TRUE)
 source("./handlers/getOrdNom.r")
 source("./handlers/getNomNom.r")
-source("./getters/chooseAppropriateHandler.r", chdir = TRUE)
+source("./getters_from_data/chooseAppropriateHandler.r", chdir = TRUE)
+
+
+source("./generateAnswer/general_procedure.r", chdir = TRUE)
 
 
 get_default_settings = function() {
-    checkout(individual)
-    id = individual
-    #### We need to save picture per nation #### -> default settings; move to main_presets.r?
-    rows_selector = (Responses[,2]==Responses[id,2]) 
+    get_defaults() # from general procedure
 }
 
 
+# persistent_source("./determine_rules.r")
 source("./determine_rules.r")
 
 
