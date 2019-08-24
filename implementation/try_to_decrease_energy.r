@@ -22,31 +22,26 @@ markBaconed = function(){
 source("../auxiliary/mygrepl.r", chdir = TRUE)
 
 
-improve_answer_to_ = function(question) {
-    
-    # get_default_settings() # OK (maybe some tests are needed cause call branch is rather long)
-    look_for_variables_influencing_on_answer() # super!
-    
-    # variable_to_generate = question
-    # register(variable_to_generate)
-    
+generate_answer_to_question = function(){
+    # Следуя заветам партии
     determine_question_type()
-    determine_generation_rule_view()
+    look_for_variables_influencing_on_answer()
+    determine_their_types()
+    find_expected_correlations()
     
-    checkout(influencing_variables)
+    
+    based_on = list(
+        question_type = ""
+    )
+    determine_generation_rule_view()
     for (influencing_variable in influencing_variables){
-        call_appropriate_rule_modifier() # depends both on rule_view and on influencing_var type
+        based_on = list(
+            influencing_variable_type = "",
+            generation_rule_view = ""
+        )
+        call_appropriate_generator()
     }
     
-    generate_answer()
-    
-    # Maybe I ought to migrate this chunk of code to GAG
-    # Swap with some existing answer
-    choose_target_to_swap()
-    swap()
-    
-    
-    return()
 }
 
 

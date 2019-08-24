@@ -101,6 +101,20 @@ improve_answers_of_the_ <- function(individual) {
 }
 
 
+improve_answer_to_ = function(question) {
+    
+    based_on = list(
+        question_type = "",
+        influencing_variables_types = "",
+        expected_correlations_betweeen_them = ""
+    )
+    generate_answer_to_question()
+    
+    
+    find_generated_answer_among_existing()
+    swap()
+    
+}
 
 
 
