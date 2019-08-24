@@ -16,4 +16,12 @@ try_to_generate_required_data = function() {
     }
     
     generate_answer()
+    
+    checkout(Full_set_of_var_names)
+    if (!grepl(influenced_variable, Full_set_of_var_names)) {
+        Full_set_of_var_names[length(Full_set_of_var_names)] = influenced_variable
+        register(Full_set_of_var_names)
+    }
+    
+    
 }

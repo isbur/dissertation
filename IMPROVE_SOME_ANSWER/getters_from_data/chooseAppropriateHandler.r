@@ -1,36 +1,36 @@
 source("getVariableType.r", chdir = TRUE)
+# 
+# 
+# # Rewrite using mapping matrix)
+# chooseAppropriateHandler = function(influencing_var_name, influenced_var_name){
+#     
+#     influencing_var_type = getVariableType(influencing_var_name)
+#     influenced_var_type = getVariableType(influenced_var_name)
+#     
+#     appropriateHandler = "UnknownHandler"
+#     if ( (influencing_var_type == "ordinal") && (influenced_var_type == "nominal") ){
+#         
+#         appropriateHandler = "getOrdNom"
+#         
+#     } else if ( (influencing_var_type == "nominal") && (influenced_var_type == "nominal") ){
+#         
+#         appropriateHandler = "getNomNom"
+#         
+#     } else {
+#         print("WARNING!!! Couldn't find an appropriate handler")
+#     }
+#     
+#     
+#     # } else if (variableType == "continuous") {
+#     #     # Pick question for exchange
+#     #     # Do it
+#     
+#     
+#     return(appropriateHandler)
+# }
 
 
-# Rewrite using mapping matrix)
 chooseAppropriateHandler = function(influencing_var_name, influenced_var_name){
-    
-    influencing_var_type = getVariableType(influencing_var_name)
-    influenced_var_type = getVariableType(influenced_var_name)
-    
-    appropriateHandler = "UnknownHandler"
-    if ( (influencing_var_type == "ordinal") && (influenced_var_type == "nominal") ){
-        
-        appropriateHandler = "getOrdNom"
-        
-    } else if ( (influencing_var_type == "nominal") && (influenced_var_type == "nominal") ){
-        
-        appropriateHandler = "getNomNom"
-        
-    } else {
-        print("WARNING!!! Couldn't find an appropriate handler")
-    }
-    
-    
-    # } else if (variableType == "continuous") {
-    #     # Pick question for exchange
-    #     # Do it
-    
-    
-    return(appropriateHandler)
-}
-
-
-chooseAppropriateHandler2 = function(influencing_var_name, influenced_var_name){
     
     influencing_var_type = getVariableType(influencing_var_name)
     influenced_var_type = getVariableType(influenced_var_name)

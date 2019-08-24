@@ -1,0 +1,5 @@
+source("setup_cleanup.r", chdir = TRUE)
+cleanup()
+source("setup_readResponses.r", chdir = TRUE)
+source("setup_testRegistry.r", chdir = TRUE)
+source("../auxiliary/getQuestionById.r", chdir = TRUE)

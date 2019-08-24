@@ -10,19 +10,19 @@ source("../getters_from_data/getProbabilities.r", local = TRUE)
 
 
 #depends on variable existence/latency
-get_or_set_defaults = function(){
-    
-    checkout(question)
-    
-    check_whether_variable_exists() # it may be in Responses or 
-                                    # already be generated in one of the previous calls
-    # checkout(variable_exists)
-    # if(variable_exists){
-    #     get_defaults()
-    # } else {
-    #     set_defaults()
-    # }
-}
+# get_or_set_defaults = function(){
+#     
+#     checkout(question)
+#     
+#     check_whether_variable_exists() # it may be in Responses or 
+#                                     # already be generated in one of the previous calls
+#     # checkout(variable_exists)
+#     # if(variable_exists){
+#     #     get_defaults()
+#     # } else {
+#     #     set_defaults()
+#     # }
+# }
 
 
 get_defaults = function(){
@@ -50,11 +50,13 @@ look_for_dependencies = function () {
 }
 
 
+# get one from improveSomeAnswer
 modify_probabilities_according_to_rules = function() {
     
 }
 
 
+# get good one from improveSomeAnswer
 generate_answer = function() {
     
 }

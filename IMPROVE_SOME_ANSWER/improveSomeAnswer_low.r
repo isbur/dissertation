@@ -1,16 +1,9 @@
-# persistent_source("../common/expected_corrs.r")
-# 
-# persistent_source("../auxiliary/mygrepl.r", chdir = TRUE)
-# persistent_source("./handlers/getOrdNom.r")
-# persistent_source("./handlers/getNomNom.r")
-# persistent_source("./getters_from_data/chooseAppropriateHandler.r", chdir = TRUE)
-
-
 source("../common/expected_corrs.r")
 
 source("../auxiliary/mygrepl.r", chdir = TRUE)
 source("./handlers/getOrdNom.r")
 source("./handlers/getNomNom.r")
+source("./handlers/getNomCont.r")
 source("./getters_from_data/chooseAppropriateHandler.r", chdir = TRUE)
 
 
@@ -22,11 +15,26 @@ get_default_settings = function() {
 }
 
 
-# persistent_source("./determine_rules.r")
-source("./determine_rules.r")
+change_answer_generation_settings = function(){
+    
+    check_whether_influencing_variable_is_latent()
+    
+
+    checkout(influencing_var_name)
+    checkout(question)
+    appropriateHandler = chooseAppropriateHandler(influencing_var_name, question)
+    # cat("Current influencing_var_name:\t",influencing_var_name,"\nCurrent influenced_var_name:\t",question_name,"\n")
+    
+    register(appropriateHandler)
+    
+    
+    modify_settings_according_to_rules()
+    
+}
 
 
-modify_settings_according_to_ = function(rules) {
+
+modify_settings_according_to_rules = function() {
     checkout(appropriateHandler)
     checkout(filtered_M)
     checkout(influencing_variable)
@@ -36,9 +44,10 @@ modify_settings_according_to_ = function(rules) {
     influencing_var = influencing_variable
     question_name = question
     
-    # probs = getProbabilities()
+    checkout(current_probs) 
+
     
-    rule = filtered_M[ (filtered_M[,1]==influencing_var),3] #indeed, fuck determine_rules!
+    rule = filtered_M[ (filtered_M[,1]==influencing_var),3] 
     print("RULE:")
     print(rule)
     
@@ -56,10 +65,14 @@ modify_settings_according_to_ = function(rules) {
         decomposed_rule = as.double(decomposed_rule[[1]])
         print(decomposed_rule)
         
-        probs = c(1,0,0,0)
+        # probs = c(1,0,0,0)
         # probs = do.call(appropriateHandler, list(Responses[individual, question_name], probs, decomposed_rule)) # maybe will be needed c() -> list() *dcmpsdrule*
-        probs = do.call(appropriateHandler, list(Responses[individual, question_name], probs, decomposed_rule))
+        current_probs = do.call(appropriateHandler, list(Responses[individual, question_name], current_probs, decomposed_rule))
     }
+    
+    
+    register(current_probs)
+    
     
     # # Let each variable have equal influence on target variable
     # target_factor = filtered_M[1,2]
@@ -70,4 +83,33 @@ modify_settings_according_to_ = function(rules) {
 }
 
 
+source("try_to_generate_required_data.r")
+
+
+check_whether_influencing_variable_is_latent = function(){
+    checkout(influencing_variable)
+    checkout(question)
+    influencing_var = influencing_variable
+    question_name = question
+    
+    data_is_needed_to_be_generated = FALSE
+    var_selector = tryCatch({mygrepl(influencing_var, names(Responses))},
+                            error = function(e){
+                                print(e) 
+                                data_is_needed_to_be_generated = TRUE
+                            })
+    register(data_is_needed_to_be_generated) # for debugging purposes
+    # if (data_is_needed_to_be_generated) {
+    #     try_to_generate_required_data()
+    #     checkout(Full_set_of_var_names)
+    #     mygrepl(influencing_var, Full_set_of_var_names)
+    #     warning("More data was generated")
+    # } 
+    
+    
+    # There is a certain error
+    # all vars inside IVN:
+    influencing_var_name = names(Responses)[var_selector]
+    checkout(influencing_var_name)
+}
 

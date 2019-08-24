@@ -1,7 +1,7 @@
 library(sets)
 
 
-persistent_source("./common/constants.r")
+source("../common/constants.r")
 
 
 myPush = function(q, item) {

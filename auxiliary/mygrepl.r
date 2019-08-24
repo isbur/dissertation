@@ -21,8 +21,7 @@ mygrepl = function(pattern, x){
     }
     
     if (iterations_limit_has_been_reached) {
-        cat("More data is needed to be generated\n\n")
-        return("More data is needed to be generated")
+        stop("Iterations limit was approached")
     }
     
     return(trial)

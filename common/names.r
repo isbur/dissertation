@@ -37,3 +37,4 @@ names = c("1. Страна",
 )
 
 Set_of_questions = names
+Full_set_of_var_names = Set_of_questions

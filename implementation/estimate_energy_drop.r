@@ -1,7 +1,7 @@
 library(sets)
 
 
-source("./auxiliary/myPush.r")
+source("../auxiliary/myPush.r")
 
 
 energies.append = function(new_energy){

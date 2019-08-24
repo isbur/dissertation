@@ -75,7 +75,7 @@ checkoutErrorHandler = function(error) {
 
 
 if (should_I_send_checkout_error_outside_registar == TRUE) {
-    persistent_source(paste0(externalCheckoutErrorHandler_location, externalCheckoutErrorHandler_name, ".r"))
+    source(paste0(externalCheckoutErrorHandler_location, externalCheckoutErrorHandler_name, ".r"))
 }
 
 

@@ -1,7 +1,7 @@
 library("xlsx")
 
 # persistent_source("./common/names.r")
-source("./common/names.r")
+source("../common/names.r")
 
 read_responses = function(filename = NULL, path_to_dir = ""){
     
@@ -14,7 +14,7 @@ read_responses = function(filename = NULL, path_to_dir = ""){
     
     if(!exists("responses_reserved_copy")) {
         
-        cat("Hard way was chosen\n")
+        # cat("Hard way was chosen\n")
         Postfices = c("A","K","U")
         responses=NULL
         for (postfix in Postfices) {
@@ -29,7 +29,7 @@ read_responses = function(filename = NULL, path_to_dir = ""){
 
         assign("responses_reserved_copy", responses, envir = .GlobalEnv)
     } else {
-        cat("Easy way was chosen\n")
+        # cat("Easy way was chosen\n")
         responses = responses_reserved_copy
 
     }
